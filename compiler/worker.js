@@ -1,4 +1,4 @@
-const { checkResult } = require("./compiler/run");
+const { checkResult } = require("./run");
 const tress = require("tress");
 const axios = require("axios");
 

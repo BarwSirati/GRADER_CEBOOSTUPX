@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.urlencoded({ limit: "1mb", extended: false }));
 
 app.get("/", (req, res, next) => {
-  res.status(200).send({ msg: "This is a compiler for CEBOOSTUPX" });
+  res.status(200).send({ msg: "THIS IS COMPILER FOR CEBOOSTUPX" });
 });
 app.use("/checkResult", require("./services/checkResult"));
 
