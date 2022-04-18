@@ -21,8 +21,15 @@ exports.add_res_queue = async (req, res) => {
 
 const backend = async ({ solutionId, userId, sourceCode }) => {
   try {
-    const fetch = await axios.get(`url/getQuestion/${solutionId}`);
-    const checkAnswer = await checkResult(code, fetch.input, fetch.output);
+    const fetch = await axios.get(
+      `http://localhost:3000/question/${solutionId}`
+    );
+    const query = fetch.data[0];
+    const checkAnswer = await checkResult(
+      sourceCode,
+      query.input,
+      query.output
+    );
     console.log(checkAnswer);
   } catch (err) {
     console.log(err.message);

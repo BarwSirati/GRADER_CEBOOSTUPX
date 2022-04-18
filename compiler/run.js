@@ -34,6 +34,8 @@ exports.checkResult = async (sourceCode, input, output) => {
                 status,
               });
             }
+            var arrInput = Object.entries(input);
+            var arrOutput = Object.entries(output);
             var inputMap = [];
 
             if (input.length != output.length) {
@@ -44,12 +46,12 @@ exports.checkResult = async (sourceCode, input, output) => {
               });
               return;
             }
-            const mapInput = input.map(async (inputX, idx) => {
-              inputMap[idx] = await run(filePathExe, inputX);
+            const mapInput = arrInput.map(async (inputX, idx) => {
+              inputMap[idx] = await run(filePathExe, inputX[1]);
             });
             await Promise.all(mapInput);
-            output.forEach((runTest) => {
-              if (checkAnswer(inputMap[index].result, runTest)) {
+            arrOutput.forEach((runTest) => {
+              if (checkAnswer(inputMap[index].result, runTest[1])) {
                 resultTest += "P";
               } else {
                 if (inputMap[index].result == "Timeout")
