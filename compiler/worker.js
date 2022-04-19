@@ -2,9 +2,9 @@ const { checkResult } = require("./run");
 const tress = require("tress");
 const axios = require("axios");
 
-const queue = tress((body, next) => {
+const queue = tress((req, next) => {
   try {
-    backend(body).then(() => next());
+    backend(req.body, req.headers).then(() => next());
   } catch (err) {
     console.log(e.message);
   }
@@ -12,17 +12,19 @@ const queue = tress((body, next) => {
 
 exports.add_res_queue = async (req, res) => {
   try {
-    queue.push(req.body);
+    queue.push(req);
     res.status(200).send("Req in queue");
   } catch (err) {
     res.status(304).send("Error sendding");
   }
 };
 
-const backend = async ({ solutionId, userId, sourceCode }) => {
+const backend = async ({ solutionId, userId, sourceCode }, headers) => {
   try {
+    const authHeader = headers["authorization"];
     const fetch = await axios.get(
-      `http://localhost:3000/question/${solutionId}`
+      `http://localhost:3000/question/${solutionId}`,
+      { headers: { Authorization: authHeader } }
     );
     const query = fetch.data[0];
     const checkAnswer = await checkResult(

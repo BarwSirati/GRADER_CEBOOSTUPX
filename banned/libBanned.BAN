@@ -1,5 +1,4 @@
 algorithm
-bit/stdc++.h
 thread
 fstream
 atomic
@@ -8,4 +7,5 @@ unistd.h
 signal.h
 unistd.h
 windows.h
+#include "
 #include"
