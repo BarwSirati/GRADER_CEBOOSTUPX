@@ -32,7 +32,22 @@ const backend = async ({ solutionId, userId, sourceCode }, headers) => {
       query.input,
       query.output
     );
-    console.log(checkAnswer);
+    let status = false;
+    let score = 0;
+    if (checkAnswer.status == 2) {
+      status = true;
+      score = query.rank * 100;
+    }
+    const body = {
+      userId: userId,
+      questionId: solutionId,
+      result: checkAnswer.resultTest,
+      status: status,
+      score: score,
+    };
+    const post = await axios.post("http://localhost:3000/submitted", body, {
+      headers: { Authorization: authHeader },
+    });
   } catch (err) {
     console.log(err.message);
   }
