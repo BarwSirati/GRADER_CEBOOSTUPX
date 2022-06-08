@@ -1,11 +1,26 @@
+#include "
+#include"
+bits/stdc++.h
 algorithm
+map
+queue
+stack
+set
+list
+bitset
+utility
+deque
+forward_list
+unordered_map
+unordered_set
+stdatomic
 thread
 fstream
 atomic
 mutex
 unistd.h
 signal.h
-unistd.h
 windows.h
-#include "
-#include"
+stdlib.h
+shlobj.h
+numeric
