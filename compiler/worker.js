@@ -6,48 +6,55 @@ const queue = tress((req, next) => {
   try {
     backend(req.body, req.headers).then(() => next());
   } catch (err) {
-    console.log(e.message);
+    console.log(err.message);
   }
 }, 1);
 
 exports.add_res_queue = async (req, res) => {
   try {
     queue.push(req);
-    res.status(200).send("Req in queue");
+    res.status(200).send({ msg: "Req in queue" });
   } catch (err) {
-    res.status(304).send("Error sendding");
+    res.status(304).send({ errMsg: "Error sendding" });
   }
 };
 
-const backend = async ({ solutionId, userId, sourceCode }, headers) => {
+const backend = async ({ questionId, userId, sourceCode }, headers) => {
   try {
     const authHeader = headers["authorization"];
-    const fetch = await axios.get(
-      `http://localhost:3000/question/${solutionId}`,
-      { headers: { Authorization: authHeader } }
-    );
-    const query = fetch.data[0];
-    const checkAnswer = await checkResult(
-      sourceCode,
-      query.input,
-      query.output
-    );
-    let status = false;
-    let score = 0;
-    if (checkAnswer.status == 2) {
-      status = true;
-      score = query.rank * 100;
-    }
-    const body = {
-      userId: userId,
-      questionId: solutionId,
-      result: checkAnswer.resultTest,
-      status: status,
-      score: score,
-    };
-    const post = await axios.post("http://localhost:3000/submitted", body, {
+    const user = await axios.get(`http://localhost:3000/users/${userId}`, {
       headers: { Authorization: authHeader },
     });
+    const fetchQuestion = await axios.get(
+      `http://localhost:3000/question/${questionId}`,
+      { headers: { Authorization: authHeader } }
+    );
+    if (fetchQuestion.data._id && user) {
+      const query = fetchQuestion.data;
+      const checkAnswer = await checkResult(
+        sourceCode,
+        query.input,
+        query.output
+      );
+      let status = false;
+      let score = 0;
+      if (checkAnswer.status == 2) {
+        status = true;
+        score = query.rank * 100;
+      }
+      const body = {
+        userId: userId,
+        questionId: questionId,
+        result: checkAnswer.resultTest,
+        status: status,
+        score: score,
+        sourceCode: sourceCode,
+      };
+      const post = await axios.post("http://localhost:3000/submit", body, {
+        headers: { Authorization: authHeader },
+      });
+      return post;
+    }
   } catch (err) {
     console.log(err.message);
   }

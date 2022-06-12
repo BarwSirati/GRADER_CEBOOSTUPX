@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
 var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200,
@@ -15,6 +14,6 @@ app.get("/", (req, res, next) => {
   res.status(200).send({ msg: "THIS IS COMPILER FOR CEBOOSTUPX" });
   next();
 });
-app.use("/checkResult", require("./services/checkResult"));
+app.use("/compile", require("./services/checkResult"));
 
 module.exports = app;
