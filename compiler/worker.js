@@ -21,7 +21,6 @@ exports.add_res_queue = async (req, res) => {
 
 const backend = async ({ questionId, userId, sourceCode }, headers) => {
     try {
-        console.log(questionId)
         const authHeader = headers['authorization']
         const user = await axios.get(`http://localhost:3000/users/${userId}`, {
             headers: { Authorization: authHeader },
