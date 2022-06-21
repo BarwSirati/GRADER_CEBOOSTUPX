@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.urlencoded({ limit: '1mb', extended: false }))
 
 app.get('/', (req, res, next) => {
-    res.status(200).send({ msg: 'THIS IS COMPILER FOR CEBOOSTUPX' })
+    res.status(200).send({ msg: 'THIS IS COMPILER FOR CEBOOSTUPX | KMITL CE60' })
     next()
 })
 app.use('/compile', require('./services/checkResult'))
