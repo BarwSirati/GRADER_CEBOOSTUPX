@@ -16,13 +16,15 @@
         "axios": "^0.26.1",
         "cluster": "^0.7.7",
         "cors": "^2.8.5",
+        "date-fns": "^2.28.0",
         "dotenv": "^16.0.0",
         "eslint-config-prettier": "^8.5.0",
         "express": "^4.17.3",
         "express-validation": "^4.1.0",
         "jsonwebtoken": "^8.5.1",
         "strip-comments": "^2.0.1",
-        "tress": "^1.1.4"
+        "tress": "^1.1.4",
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "eslint": "^8.18.0",

@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const corsOptions = require('./configs/corsOptions')
 const { ValidationError } = require('express-validation')
+const { logger } = require('./middleware/logEvents')
 const dotenv = require('dotenv')
 dotenv.config()
-var corsOptions = {
-    origin: process.env.BACKEND_URL,
-    optionsSuccessStatus: 200,
-}
+
+app.use(logger)
 app.use(cors(corsOptions))
 app.use(express.json({ limit: '1mb' }))
 app.use(express.urlencoded({ extended: true }))
