@@ -2,8 +2,10 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { ValidationError } = require('express-validation')
+const dotenv = require('dotenv')
+dotenv.config()
 var corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.BACKEND_URL,
     optionsSuccessStatus: 200,
 }
 app.use(cors(corsOptions))

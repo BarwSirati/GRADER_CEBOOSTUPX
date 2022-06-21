@@ -22,11 +22,11 @@ exports.add_res_queue = async (req, res) => {
 const backend = async ({ questionId, userId, sourceCode }, headers) => {
     try {
         const authHeader = headers['authorization']
-        const user = await axios.get(`http://localhost:3000/users/${userId}`, {
+        const user = await axios.get(`${process.env.BACKEND_URL}/users/${userId}`, {
             headers: { Authorization: authHeader },
         })
         const fetchQuestion = await axios.get(
-            `http://localhost:3000/question/${questionId}`,
+            `${process.env.BACKEND_URL}/question/grader/${questionId}`,
             { headers: { Authorization: authHeader } }
         )
         if (fetchQuestion.data._id && user) {
@@ -51,7 +51,7 @@ const backend = async ({ questionId, userId, sourceCode }, headers) => {
                 sourceCode: sourceCode,
             }
             const post = await axios.post(
-                'http://localhost:3000/submit',
+                `${process.env.BACKEND_URL}/submit`,
                 body,
                 {
                     headers: { Authorization: authHeader },
