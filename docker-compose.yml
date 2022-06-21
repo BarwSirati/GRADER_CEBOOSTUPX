@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  compiler:
+    container_name: GRADER_CEBOOSTUPX
+    image: compiler
+    build:
+      context: ./
+      target: base
+    volumes:
+      - .:/src/compiler
+    networks:
+      - nginx
+networks:
+  nginx:
+    name: nginx_bridge
+    driver: bridge
+    
