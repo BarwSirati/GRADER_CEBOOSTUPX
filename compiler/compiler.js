@@ -80,18 +80,17 @@ exports.run = async (filePathExe, input) => {
                     }
                 }
             )
-            if (input != '') {
-                child.stdin.pipe(child.stdin)
-                child.stdin.setEncoding('utf-8')
-                child.stdin.write(input)
-                child.stdin.end()
-                child.stdin.on('error', (code) => {
-                    result = 'noneedforinput'
-                    resolve({
-                        result,
-                    })
+            child.stdin.pipe(child.stdin)
+            child.stdin.setEncoding('utf-8')
+            child.stdin.write(input)
+            child.stdin.end()
+            child.stdin.on('error', (code) => {
+                result = 'noneedforinput'
+                resolve({
+                    result,
                 })
-            }
+            })
+            
         } catch (err) {
             console.log(err.message)
         }

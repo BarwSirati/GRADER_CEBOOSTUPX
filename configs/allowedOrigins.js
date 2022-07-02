@@ -1,7 +1,4 @@
 require('dotenv').config()
-const allowedOrigins = [
-    `${process.env.FRONTEND_URL}`,
-    `${process.env.DEV_FRONTEND_URL}`,
-]
+const allowedOrigins = process.env.URL.split(',')
 console.log(allowedOrigins)
 module.exports = allowedOrigins
