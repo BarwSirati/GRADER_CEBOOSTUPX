@@ -38,26 +38,19 @@ const backend = async ({ questionId, userId, sourceCode }, headers) => {
                 query.output
             )
             let status = false
-            let score = 0
             if (checkAnswer.status == 2) {
                 status = true
-                score = query.rank * 100
             }
             const body = {
                 userId: userId,
                 questionId: questionId,
                 result: checkAnswer.resultTest,
                 status: status,
-                score: score,
                 sourceCode: sourceCode,
             }
-            const post = await axios.post(
-                `${api}/submit`,
-                body,
-                {
-                    headers: { Authorization: authHeader },
-                }
-            )
+            const post = await axios.post(`${api}/submit`, body, {
+                headers: { Authorization: authHeader },
+            })
             return post
         }
     } catch (err) {

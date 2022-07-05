@@ -14,16 +14,14 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.urlencoded({ limit: '1mb', extended: false }))
 
 app.get('/', (req, res, next) => {
-    res.status(200).send({ msg: 'THIS IS COMPILER FOR CEBOOSTUPX | KMITL CE60' })
+    res.status(200).send({
+        msg: 'THIS IS COMPILER FOR CEBOOSTUPX | KMITL CE60',
+    })
     next()
 })
 app.use('/compile', require('./services/checkResult'))
 
-app.use((err, req, res, next) => {
-    if (err instanceof ValidationError) {
-        return res.status(err.statusCode).json(err)
-    }
-    next()
+app.use((err, req, res) => {
     return res.status(500).json(err)
 })
 

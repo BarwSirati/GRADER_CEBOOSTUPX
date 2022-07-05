@@ -4,3 +4,4 @@ complieCpp
 compileExe
 *.cpp
 Dockerfile
+logs
