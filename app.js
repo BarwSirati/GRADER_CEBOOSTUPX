@@ -21,8 +21,19 @@ app.get('/', (req, res, next) => {
 })
 app.use('/compile', require('./services/checkResult'))
 
-app.use((err, req, res) => {
-    return res.status(500).json(err)
+// Error Handling
+app.use((err, req, res, next) => {
+    console.log(err)
+
+    err.statusCode = err.statusCode || 404
+    err.status = err.status || 'Not Found!'
+
+    res.status(err.statusCode).send({
+        status: err.status,
+        message: err.cusMessage || 'Unknown Error',
+        code: err.code || 0,
+    })
+    next()
 })
 
 module.exports = app

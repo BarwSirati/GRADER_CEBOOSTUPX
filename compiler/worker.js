@@ -19,11 +19,11 @@ exports.add_res_queue = async (req, res) => {
     }
 }
 
-const backend = async ({ questionId, userId, sourceCode }, headers) => {
+const backend = async ({ questionId, sourceCode }, headers) => {
     const api = process.env.URL.split(',')[0]
     try {
         const authHeader = headers['authorization']
-        const user = await axios.get(`${api}/users/${userId}`, {
+        const user = await axios.get(`${api}/users/current/info`, {
             headers: { Authorization: authHeader },
         })
         const fetchQuestion = await axios.get(
@@ -42,7 +42,7 @@ const backend = async ({ questionId, userId, sourceCode }, headers) => {
                 status = true
             }
             const body = {
-                userId: userId,
+                userId: user.id,
                 questionId: questionId,
                 result: checkAnswer.resultTest,
                 status: status,
