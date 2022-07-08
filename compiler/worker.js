@@ -30,7 +30,8 @@ const backend = async ({ questionId, sourceCode }, headers) => {
             `${api}/question/grader/${questionId}`,
             { headers: { Authorization: authHeader } }
         )
-        if (fetchQuestion.data._id && user) {
+        
+        if (fetchQuestion.data._id && user.data) {
             const query = fetchQuestion.data
             const checkAnswer = await checkResult(
                 sourceCode,
@@ -42,7 +43,7 @@ const backend = async ({ questionId, sourceCode }, headers) => {
                 status = true
             }
             const body = {
-                userId: user.id,
+                userId: user.data.id,
                 questionId: questionId,
                 result: checkAnswer.resultTest,
                 status: status,
