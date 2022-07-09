@@ -30,7 +30,7 @@ const backend = async ({ questionId, sourceCode }, headers) => {
             `${api}/question/grader/${questionId}`,
             { headers: { Authorization: authHeader } }
         )
-        
+
         if (fetchQuestion.data._id && user.data) {
             const query = fetchQuestion.data
             const checkAnswer = await checkResult(
@@ -39,15 +39,14 @@ const backend = async ({ questionId, sourceCode }, headers) => {
                 query.output
             )
             let status = false
-            if (checkAnswer.status == 2) {
-                status = true
-            }
+            if (checkAnswer.status == 2) status = true
             const body = {
                 userId: user.data.id,
                 questionId: questionId,
                 result: checkAnswer.resultTest,
                 status: status,
                 sourceCode: sourceCode,
+                score: status ? fetchQuestion.data.rank * 100 : 0,
             }
             const post = await axios.post(`${api}/submit`, body, {
                 headers: { Authorization: authHeader },
