@@ -24,7 +24,7 @@ exports.checkResult = async (sourceCode, input, output) => {
                     }
                     await build(filePathCpp, async (err, filePathExe) => {
                         if (err) {
-                            resultTest = 'B'
+                            resultTest = 'S'
                             status = 1
                             if (
                                 err.toString().includes('_is_a_banned_function')
@@ -58,21 +58,26 @@ exports.checkResult = async (sourceCode, input, output) => {
                             ) {
                                 resultTest += 'P'
                             } else {
-                                if (inputMap[index].result == 'Timeout')
-                                    (resultTest += 'T'), (status = 1)
-                                else if (
+                                if (inputMap[index].result == 'Timeout') {
+                                    resultTest += 'T'
+                                    status = 1
+                                } else if (
                                     inputMap[index].result == 'Out_of_buffer'
-                                )
-                                    (resultTest += 'O'), (status = 1)
-                                else if (
+                                ) {
+                                    resultTest += 'O'
+                                    status = 1
+                                } else if (
                                     inputMap[index].result == 'runtime_error'
-                                )
-                                    (resultTest += 'X'), (status = 1)
-                                else if (
-                                    inputMap[index].result == 'noneedforinput'
-                                )
-                                    (resultTest += '-'), (status = 1)
-                                else (resultTest += '-'), (status = 1)
+                                ) {
+                                    resultTest += 'R'
+                                    status = 1
+                                } else if (inputMap[index].result == 'error') {
+                                    resultTest += 'E'
+                                    status = 1
+                                } else {
+                                    resultTest += '-'
+                                    status = 1
+                                }
                             }
                             index++
                         })

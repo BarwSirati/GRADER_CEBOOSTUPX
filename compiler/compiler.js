@@ -86,11 +86,12 @@ exports.run = async (filePathExe, input) => {
                 child.stdin.write(input)
                 child.stdin.end()
                 child.stdin.on('error', (code) => {
-                    console.log(`child process exited with code ${code}`)
-                    result = 'noneedforinput'
-                    resolve({
-                        result,
-                    })
+                    if (!(code.syscall == 'write')) {
+                        result = 'error'
+                        resolve({
+                            result,
+                        })
+                    }
                 })
             }
         } catch (err) {
