@@ -1,7 +1,6 @@
 node_modules
-.env
 complieCpp
 compileExe
 *.cpp
-Dockerfile
+*.exe
 logs
