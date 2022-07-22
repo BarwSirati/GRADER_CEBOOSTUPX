@@ -10,6 +10,9 @@ module.exports = (sourceCode) => {
             return [-1, `sorry_${lib}_is_a_banned_library`]
         }
     }
+    if (sourceCode.toString().includes('system')) {
+        return [-1, `sorry_system_is_a_banned`]
+    }
     try {
         if (sourceCode.lastIndexOf(`#include`) == -1) {
             return [1, `#include\"../banned/banned.h\"\r\n` + sourceCode]
