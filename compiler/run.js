@@ -16,6 +16,11 @@ exports.checkResult = async (sourceCode, input, output) => {
                         if (err.toString().includes(`_is_a_banned_library`)) {
                             resultTest = 'L'
                         }
+                        if (
+                            err.toString().includes('sorry_system_is_a_banned')
+                        ) {
+                            resultTest = 'H'
+                        }
                         resolve({
                             resultTest,
                             status,
